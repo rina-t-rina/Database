@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Corona Genome & Structure Database</title>
+
+    <!-- Bootstrap CSS framework for responsive layout and components -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet">
+
+    <!-- Custom stylesheet for site-specific styling -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+<!-- Dark navigation bar with site branding -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">CoronaDB</a>
+    </div>
+</nav>
+
+<!-- Main content container with top margin -->
+<div class="container mt-4">
+    <!-- Breadcrumb navigation: shows current page hierarchy -->
+    {% if breadcrumbs %}
+    <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <!-- Loop through breadcrumb items -->
+        {% for crumb in breadcrumbs %}
+        <!-- Last item is current page (no link) -->
+        {% if loop.last %}
+            <li class="breadcrumb-item active" aria-current="page">
+            {{ crumb.label }}
+            </li>
+        <!-- Other items are clickable links -->
+        {% else %}
+            <li class="breadcrumb-item">
+            <a href="{{ crumb.url }}">{{ crumb.label }}</a>
+            </li>
+        {% endif %}
+        {% endfor %}
+    </ol>
+    </nav>
+    {% endif %}
+    
+    <!-- Page-specific content block (overridden by child templates) -->
+    {% block content %}{% endblock %}
+</div>
+
+<!-- Load custom JavaScript for interactivity -->
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Centered hero section with title and description -->
+<div class="text-center mb-5">
+    <h1 class="display-5">Coronavirus Genome & Structure Database</h1>
+    <p class="lead">
+        Explore genes, proteins, and 3D structures of SARS-related severe coronaviruses.
+    </p>
+</div>
+
+<!-- Search card with shadow for depth -->
+<div class="card p-4 shadow-sm">
+    <h4 class="mb-3">Search the database</h4>
+
+    <!-- Form with GET method; triggered by JavaScript on submit -->
+    <form method="get" id="searchForm">
+        <div class="row g-3">
+
+            <!-- Virus selection dropdown -->
+            <div class="col-md-4">
+                <label class="form-label">Virus</label>
+                <select class="form-select" name="virus" id="virusSelect" required>
+                    <!-- Loop through available viruses -->
+                    {% for v in viruses %}
+                    <option value="{{ v }}">{{ v }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- Data type selection dropdown (Genes or Proteins) -->
+            <div class="col-md-4">
+                <label class="form-label">Data type</label>
+                <select class="form-select" id="typeSelect" required>
+                    <option value="genes">Genes</option>
+                    <option value="proteins">Proteins</option>
+                </select>
+            </div>
+
+            <!-- Submit button (full width on this column) -->
+            <div class="col-md-4 d-flex align-items-end">
+                <button class="btn btn-primary w-100" type="submit">
+                    Explore
+                </button>
+            </div>
+
+        </div>
+    </form>
+</div>
+
+
+<!-- ADD THIS PART BELOW Test-->
+<div class="mt-4">
+    <div class="alert alert-secondary">
+        <strong>SARS-CoV (2002)</strong> — NC_004718.3  
+        <br>
+        First severe acute respiratory syndrome coronavirus; zoonotic origin.
+    </div>
+
+    <div class="alert alert-secondary">
+        <strong>MERS-CoV (2012)</strong> — NC_019843.3  
+        <br>
+        Middle East Respiratory Syndrome coronavirus; camel reservoir.
+    </div>
+
+    <div class="alert alert-secondary">
+        <strong>SARS-CoV-2 (2019)</strong> — NC_045512.2  
+        <br>
+        Cause of the COVID-19 pandemic; extensively studied spike protein.
+    </div>
+</div>
+{% endblock %}

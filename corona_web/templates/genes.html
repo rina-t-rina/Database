@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Page heading with virus name -->
+<h2>Genes – {{ virus }}</h2>
+
+<!-- Striped table with hover effect for better readability -->
+<table class="table table-striped table-hover mt-3">
+    <thead class="table-dark">
+        <tr>
+            <!-- Column headers: Gene symbol, description, genomic positions -->
+            <th>Gene</th>
+            <th>Description</th>
+            <th>Start</th>
+            <th>End</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Loop through each gene from the passed data -->
+        {% for g in genes %}
+        <tr>
+            <!-- Display gene symbol -->
+            <td>{{ g.gene_symbol }}</td>
+            <!-- Display gene name/product description -->
+            <td>{{ g.gene_name }}</td>
+            <!-- Display start position on genome -->
+            <td>{{ g.start_pos }}</td>
+            <!-- Display end position on genome -->
+            <td>{{ g.end_pos }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
