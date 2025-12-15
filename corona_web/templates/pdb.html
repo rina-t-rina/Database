@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Check if PDB data was retrieved -->
+{% if pdb %}
+<div class="card shadow-sm p-4">
+    <!-- Page heading with PDB ID -->
+    <h2 class="mb-3">PDB Structure: {{ pdb.pdb_id }}</h2>
+
+    <!-- List of PDB entry details -->
+    <ul class="list-group list-group-flush mb-3">
+        <!-- Protein product name -->
+        <li class="list-group-item">
+            <strong>Protein:</strong> {{ pdb.product_name }}
+        </li>
+        <!-- UniProt accession for this protein -->
+        <li class="list-group-item">
+            <strong>UniProt:</strong> {{ pdb.uniprot_accession }}
+        </li>
+        <!-- Experimental method used (cryo-EM, X-ray, NMR, etc.) -->
+        <li class="list-group-item">
+            <strong>Experimental method:</strong>
+            {{ pdb.experimental_method or "N/A" }}
+        </li>
+        <!-- Structure resolution in Ångströms (if available) -->
+        <li class="list-group-item">
+            <strong>Resolution:</strong>
+            {% if pdb.resolution_angstrom %}
+                {{ pdb.resolution_angstrom }} Å
+            {% else %}
+                N/A
+            {% endif %}
+        </li>
+    </ul>
+
+    <!-- External link to RCSB PDB entry -->
+    <a href="{{ pdb.rcsb_url }}"
+       target="_blank"
+       class="btn btn-outline-primary">
+        View on RCSB PDB
+    </a>
+</div>
+<!-- Show warning if PDB entry not found -->
+{% else %}
+<div class="alert alert-warning">
+    PDB entry not found.
+</div>
+{% endif %}
+{% endblock %}

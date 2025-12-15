@@ -1,0 +1,26 @@
+/* Light gray background for the entire page */
+body {
+    background-color: #f8f9fa;
+}
+
+/* Headings: bold weight for emphasis */
+h1, h2 {
+    font-weight: 600;
+}
+
+/* Card: rounded corners for a modern look */
+.card {
+    border-radius: 12px;
+}
+
+/* Breadcrumb: remove default background, align to left edge */
+.breadcrumb {
+    background-color: transparent;
+    padding-left: 0;
+    margin-bottom: 1rem;
+}
+
+/* Breadcrumb links: remove underlines for clean appearance */
+.breadcrumb a {
+    text-decoration: none;
+}

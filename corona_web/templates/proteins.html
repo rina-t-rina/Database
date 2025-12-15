@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Proteins – {{ virus }}</h2>
+
+<div class="row">
+{% for p in proteins %}
+    <div class="col-md-6 mb-4">
+        <div class="card h-100 shadow-sm position-relative">
+
+            <!-- Pie chart container positioned in top-right corner -->
+            <div style="position:absolute; top:10px; right:10px; width:130px; height:130px;"
+                 id="chart-{{ p.protein_pk }}"></div>
+
+            <div class="card-body">
+                <!-- Protein product name as card title -->
+                <h5 class="card-title">{{ p.product_name }}</h5>
+
+                <!-- Protein details: UniProt, RefSeq accession, amino acid length -->
+                <p class="card-text">
+                    <strong>UniProt:</strong> {{ p.uniprot_accession or "N/A" }}<br>
+                    <strong>RefSeq:</strong> {{ p.refseq_protein_accession }}<br>
+                    <strong>Length:</strong> {{ p.aa_length }} aa
+                </p>
+
+                <!-- List of associated PDB structures (if available) -->
+                {% if p.pdb_ids %}
+                <p>
+                    <strong>PDB structures:</strong><br>
+                    <!-- Loop through PDB IDs and create clickable badges -->
+                    {% for pdb in p.pdb_ids.split(',') %}
+                        <a href="{{ url_for('pdb_page', pdb_id=pdb) }}"
+                           class="badge bg-primary text-decoration-none me-1 mb-1">
+                            {{ pdb }}
+                        </a>
+                    {% endfor %}
+                </p>
+                {% else %}
+                <!-- Fallback message if no PDB structures exist -->
+                <p class="text-muted">No PDB structures available</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endfor %}
+</div>
+
+<!-- Load Google Charts library for pie chart visualization -->
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<script>
+<!-- Initialize Google Charts and draw all pie charts -->
+google.charts.load('current', {'packages':['corechart']});
+google.charts.setOnLoadCallback(drawAllCharts);
+
+<!-- Main function to draw all protein pie charts -->
+function drawAllCharts() {
+    {% for p in proteins %}
+    drawChart_{{ p.protein_pk }}();
+    {% endfor %}
+}
+
+<!-- Generate a unique chart function for each protein -->
+{% for p in proteins %}
+function drawChart_{{ p.protein_pk }}() {
+
+    <!-- Data table: experimental method counts for this protein -->
+    const data = google.visualization.arrayToDataTable([
+        ['Method', 'Count'],
+        ['Cryo-EM', {{ p.cryo_em | default(0) | int }}],
+        ['X-ray',   {{ p.xray | default(0) | int }}],
+        ['NMR',     {{ p.nmr | default(0) | int }}],
+        ['Other',   {{ p.other_methods | default(0) | int }}]
+    ]);
+
+    <!-- Pie chart options: no legend, custom colors, transparent background -->
+    const options = {
+        legend: 'none',
+        pieSliceText: 'none',
+        chartArea: { width: '100%', height: '100%' },
+        colors: ['#0d6efd', '#198754', '#ffc107', '#6c757d'],
+        backgroundColor: 'transparent'
+    };
+
+    <!-- Draw pie chart in designated container -->
+    const chart = new google.visualization.PieChart(
+        document.getElementById('chart-{{ p.protein_pk }}')
+    );
+
+    chart.draw(data, options);
+}
+{% endfor %}
+</script>
+{% endblock %}
