@@ -31,7 +31,7 @@ It integrates data from NCBI GenBank, UniProt, and the Protein Data Bank (PDB) i
 
 # Installation
 ## Clone the Repository 
-git clone https://github.com/your-username/Coronavirus-Database.git
+git clone (https://github.com/rina-t-rina/Database/tree/db-dev)
 ## Set UP the MySQL Databse (configurations)
 ## Run the ETL Pipline (extract.py)
 ## Run the Web Application (app.py)
