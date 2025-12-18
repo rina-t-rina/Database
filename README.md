@@ -1,3 +1,9 @@
+# Coronavirus Genome & Protein Structure Explorer
+This project is a web-based application and database pipeline for exploring severe coronavirus genomes, genes, proteins, and their 3D structures.
+It integrates data from NCBI GenBank, UniProt, and the Protein Data Bank (PDB) into a local MySQL database, which can be explored via a simple Flask web interface.
+
+# Features
+## Virus-Based Exploration
 ## Browse genes and proteins for:
 	•	SARS-CoV-2
 	•	SARS-CoV
